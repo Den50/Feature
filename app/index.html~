@@ -4,7 +4,8 @@
 <head>
 
 	<meta charset="utf-8">
-	<title>Project</title>
+
+	<title>Заголовок</title>
 	<meta name="description" content="">
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,38 +45,8 @@
 <body>
 
 	<!-- Здесь пишем код -->
-
-				<canvas id="mainCanvas">
-					
-				</canvas>
-				<div id="config">
-					<p>
-						<label for="k">k: </label>		
-						<input name="k" id="k" type="range" min="-30" max="30" step="1" value="0">
-						<input type="number" id="output_k" value="0">
-					</p>
-
-			 		<p>
-			 			<label for="x">x: </label>		
-						<input name="x" id="x" type="range" min="-30" max="30" step="1" value="0">
-						<input type="number" id="output_x" value="0">
-			 		</p>
-			 		<p>
-			 			<label for="y">y: </label>		
-						<input name="y" id="y" type="range" min="-30" max="30" step="1" value="0">
-						<input type="number" id="output_y" value="0">
-			 		</p>
-				</div>
-				<div class="logs">
-					<p>Самая нижняя точка по OY: </p><span id="logs_down_y"></span>
-					<p>Самая верхняя точка по OY: </p><span id="logs_up_y"></span>
-
-					<p>Самая левая точка по OX: </p><span id="logs_left_x"></span>
-					<p>Самая правая точка по OX: </p><span id="logs_right_x"></span>
-
-				</div>
-
-
+	<div class="container"><script src="https://gist.github.com/Den50/78ad904a6f0a5930aeb9ebd45b909a26.js"></script>
+</div>
 
 	<div class="hidden"></div>
 
@@ -89,8 +60,7 @@
 	<!-- Load Scripts Start -->
 	<script>var scr = {"scripts":[
 		{"src" : "js/libs.js", "async" : false},
-		{"src" : "js/main.js", "async" : false},
-		{"src" : "js/Draw.js", "async" : false}
+		{"src" : "js/common.js", "async" : false}
 		]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
 	</script>
 	<!-- Load Scripts End -->

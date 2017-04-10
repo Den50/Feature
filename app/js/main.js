@@ -2,9 +2,9 @@ var BackGround, ConfigsPar, Draw, bg, canvas, configDOM, config_k, config_x, con
 
 canvas = document.getElementById('mainCanvas');
 
-canvas.width = 600;
+canvas.width = 810;
 
-canvas.height = 600;
+canvas.height = 810;
 
 ctx = canvas.getContext("2d");
 
@@ -28,14 +28,9 @@ BackGround = (function() {
   };
 
   BackGround.prototype.setWay = function() {
-    ctx.beginPath();
-    ctx.moveTo(0, canvas.width / 2);
-    ctx.lineTo(canvas.width, canvas.width / 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(canvas.height / 2, 0);
-    ctx.lineTo(canvas.height / 2, canvas.height);
-    return ctx.stroke();
+    ctx.fillStyle = "#777";
+    ctx.fillRect(canvas.width / 2, 0, 2, canvas.height);
+    return ctx.fillRect(0, canvas.height / 2, canvas.width, 2);
   };
 
   BackGround.prototype.initBG = function() {
@@ -94,7 +89,7 @@ Draw = (function() {
 
 par = new Draw("blue");
 
-par.setPar(0, 0, 0);
+par.setPar(1, 0, 0);
 
 par1 = new Draw("red");
 

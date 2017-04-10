@@ -1,7 +1,7 @@
 canvas = document.getElementById 'mainCanvas'
 
-canvas.width = 600
-canvas.height = 600
+canvas.width = 810
+canvas.height = 810
 ctx = canvas.getContext "2d"
 
 class BackGround
@@ -17,15 +17,11 @@ class BackGround
 			j+=15
 		do ctx.stroke
 	setWay: ->
-		do ctx.beginPath
-		ctx.moveTo 0, canvas.width / 2
-		ctx.lineTo canvas.width, canvas.width / 2
-		do ctx.stroke
+		ctx.fillStyle = "#777"
+		ctx.fillRect(canvas.width / 2, 0, 2, canvas.height)
+		ctx.fillRect(0, canvas.height / 2, canvas.width, 2)
+		#do ctx.fill
 
-		do ctx.beginPath
-		ctx.moveTo canvas.height / 2, 0
-		ctx.lineTo canvas.height / 2, canvas.height
-		do ctx.stroke
 	initBG: ->
 		do @setGrid
 		do @setWay
@@ -57,8 +53,6 @@ class Draw
 		do ctx.stroke
 	getColorPar: ->
 		@color
-
-
 #gp = (k, x, y, color)->
 #	i = -200
 #	while i < 200
@@ -66,13 +60,10 @@ class Draw
 #		ctx.fillRect((canvas.width / 2) + i * 10, (canvas.height / 2) + k / (i * 10), 1, 1)
 #		i += 0.01
 #	do ctx.stroke
-
-
 par = new Draw("blue")
-par.setPar 0, 0, 0
+par.setPar 1, 0, 0
 par1 = new Draw("red")
 #par1.setHyp 1, 0, 0
-
 
 #diagramm
 #ctx.beginPath
@@ -90,8 +81,6 @@ par1 = new Draw("red")
 #	Math.floor(Math.random() * (20 - 1)) + 1
 #	ctx.lineTo i + 100, 100 / i + 10
 #do ctx.stroke
-
-
 
 #configs of DOM Elements (params $par)
 config_k = document.getElementById 'k'
@@ -119,7 +108,6 @@ class ConfigsPar
 			when 1 then par.setPar config_k.value, value, config_y.value
 			when 2 then par.setPar config_k.value, config_x.value, value
 			else 'none'
-
 	init: (state)->
 		if @StatePut is "out"
 			@build(state, @output.value)
@@ -154,9 +142,7 @@ configsOut_y.output.onchange = ->
 	configsOut_y.init 2
 ##
 
-
-
-
 configDOM = document.getElementById 'config'
 
 configDOM.style.border = "2px solid " + do par.getColorPar
+
