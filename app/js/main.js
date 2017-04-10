@@ -1,4 +1,4 @@
-var BackGround, bg, canvas, changeParams, config_k, config_x, config_y, ctx, gp, output_k, output_x, output_y, par;
+var BackGround, ConfigsPar, Draw, bg, canvas, configDOM, config_k, config_x, config_y, configsOut_k, configsOut_x, configsOut_y, configs_k, configs_x, configs_y, ctx, output_k, output_x, output_y, par, par1;
 
 canvas = document.getElementById('mainCanvas');
 
@@ -17,12 +17,12 @@ BackGround = (function() {
     i = 0;
     while (i < canvas.width) {
       ctx.fillRect(i, 0, 1, canvas.height);
-      i += 10;
+      i += 15;
     }
     j = 0;
     while (j < canvas.height) {
       ctx.fillRect(0, j, canvas.height, 1);
-      j += 10;
+      j += 15;
     }
     return ctx.stroke();
   };
@@ -51,33 +51,52 @@ bg = new BackGround;
 
 bg.initBG();
 
-par = function(k, x, y, color) {
-  var i;
-  i = -20;
-  while (i < 20) {
-    ctx.fillStyle = color;
-    if (k > 0) {
-      ctx.fillRect((x * 10 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 10) - Math.pow(i, 2), 1, 1);
-    } else {
-      ctx.fillRect((x * 10 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 10) + Math.pow(i, 2), 1, 1);
+Draw = (function() {
+  function Draw(color) {
+    this.color = color;
+  }
+
+  Draw.prototype.setPar = function(k, x, y) {
+    var i;
+    i = -30;
+    while (i < 30) {
+      ctx.fillStyle = this.color;
+      if (k > 0) {
+        ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) - Math.pow(i, 2), 0.5, 0.5);
+      } else {
+        ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) + Math.pow(i, 2), 0.5, 0.5);
+      }
+      i += 0.01;
     }
-    i += 0.01;
-  }
-  return ctx.stroke();
-};
+    return ctx.stroke();
+  };
 
-gp = function(k, x, y, color) {
-  var i;
-  i = -200;
-  while (i < 200) {
-    ctx.fillStyle = color;
-    ctx.fillRect((canvas.width / 2) + i * 10, (canvas.height / 2) + k / (i * 10), 1, 1);
-    i += 0.01;
-  }
-  return ctx.stroke();
-};
+  Draw.prototype.setHyp = function(k, x, y) {
+    var i;
+    i = -20;
+    ctx.beginPath();
+    ctx.moveTo(0, (y * 15 + canvas.width / 2) - k / i);
+    ctx.strokeStyle = this.color;
+    while (i < 20) {
+      ctx.lineTo((x * 15 + canvas.width / 2) + i, (y * 15 + canvas.width / 2) - k / i);
+      i += 0.1;
+    }
+    return ctx.stroke();
+  };
 
-par(10, 0, 0, "blue");
+  Draw.prototype.getColorPar = function() {
+    return this.color;
+  };
+
+  return Draw;
+
+})();
+
+par = new Draw("blue");
+
+par.setPar(0, 0, 0);
+
+par1 = new Draw("red");
 
 config_k = document.getElementById('k');
 
@@ -91,52 +110,90 @@ output_x = document.getElementById('output_x');
 
 output_y = document.getElementById('output_y');
 
-changeParams = function() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  return bg.initBG();
-};
-
-config_k.onchange = function() {
-  output_k.value = this.value;
-  changeParams();
-  return par(this.value, 0, 0, "blue");
-};
-
-output_k.onchange = function() {
-  changeParams();
-  par(this.value, 0, 0, "blue");
-  if (this.value >= 30 || this.value === 30) {
-    this.value = 1;
-    return config_k.value = 1;
+ConfigsPar = (function() {
+  function ConfigsPar(output, self, StatePut) {
+    this.output = output;
+    this.self = self;
+    this.StatePut = StatePut;
   }
+
+  ConfigsPar.prototype.setChangeOutput = function() {
+    return this.output.value = this.self.value;
+  };
+
+  ConfigsPar.prototype.setChangeInput = function() {
+    return this.self.value = this.output.value;
+  };
+
+  ConfigsPar.prototype.build = function(state, value) {
+    if (this.StatePut === "in") {
+      this.setChangeOutput();
+    }
+    if (this.StatePut === "out") {
+      this.setChangeInput();
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    bg.initBG();
+    switch (state) {
+      case 0:
+        return par.setPar(value, config_x.value, config_y.value);
+      case 1:
+        return par.setPar(config_k.value, value, config_y.value);
+      case 2:
+        return par.setPar(config_k.value, config_x.value, value);
+      default:
+        return 'none';
+    }
+  };
+
+  ConfigsPar.prototype.init = function(state) {
+    if (this.StatePut === "out") {
+      return this.build(state, this.output.value);
+    } else {
+      return this.build(state, this.self.value);
+    }
+  };
+
+  return ConfigsPar;
+
+})();
+
+configs_k = new ConfigsPar(output_k, config_k, "in");
+
+configs_k.self.onchange = function() {
+  return configs_k.init(0);
 };
 
-config_x.onchange = function() {
-  output_x.value = this.value;
-  changeParams();
-  return par(output_k.value, this.value, output_y.value, "blue");
+configs_x = new ConfigsPar(output_x, config_x, "in");
+
+configs_x.self.onchange = function() {
+  return configs_x.init(1);
 };
 
-output_x.onchange = function() {
-  changeParams();
-  par(output_k.value, this.value, output_y.value, "blue");
-  if (this.value >= 30 || this.value === 30) {
-    this.value = 1;
-    return config_x.value = 1;
-  }
+configs_y = new ConfigsPar(output_y, config_y, "in");
+
+configs_y.self.onchange = function() {
+  return configs_y.init(2);
 };
 
-config_y.onchange = function() {
-  output_y.value = this.value;
-  changeParams();
-  return par(output_k.value, config_x.value, this.value, "blue");
+configsOut_k = new ConfigsPar(output_k, config_k, "out");
+
+configsOut_k.output.onchange = function() {
+  return configsOut_k.init(0);
 };
 
-output_y.onchange = function() {
-  changeParams();
-  par(output_k.value, config_x.value, this.value, "blue");
-  if (this.value >= 30 || this.value === 30) {
-    this.value = 1;
-    return config_y.value = 1;
-  }
+configsOut_x = new ConfigsPar(output_x, config_x, "out");
+
+configsOut_x.output.onchange = function() {
+  return configsOut_x.init(1);
 };
+
+configsOut_y = new ConfigsPar(output_y, config_y, "out");
+
+configsOut_y.output.onchange = function() {
+  return configsOut_y.init(2);
+};
+
+configDOM = document.getElementById('config');
+
+configDOM.style.border = "2px solid " + par.getColorPar();
