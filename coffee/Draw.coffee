@@ -1,6 +1,6 @@
 Engp = false
 ctx.fillStyle = "#000"
-radius = 2
+radius = 1
 ctx.lineWidth = radius * 2
 logs = []
 coords_down_y =  document.getElementById 'logs_down_y'

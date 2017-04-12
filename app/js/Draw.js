@@ -4,7 +4,7 @@ Engp = false;
 
 ctx.fillStyle = "#000";
 
-radius = 2;
+radius = 1;
 
 ctx.lineWidth = radius * 2;
 
