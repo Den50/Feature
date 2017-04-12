@@ -1,8 +1,6 @@
 @import "bourbon"
 @import "vars.sass"
 
-//Load Libs SASS
-@import "app/libs/animate/animate.sass"
 
 *::-webkit-input-placeholder
 	color: #666
@@ -31,8 +29,8 @@ body textarea:required:valid
 body
 	padding: 0
 	margin: 0
+	font-family: sans-serif
 canvas#mainCanvas
-	float: left
 
 
 input#output_k,
@@ -41,9 +39,22 @@ input#output_y
 	width: 50px
 	margin-left: 20px
 #config
-	width: 350px
+	width: 550px
 	padding: 20px
-	float: left
+	position: absolute
+	top: 200px
+	left: 820px
+#logs
+	position: absolute
+	top: 0
+	left: 820px
+.coords
+	background-color: #666
+	color: #fff
+	padding: 3px
+	border-radius: 2px
+
+
 
 
 

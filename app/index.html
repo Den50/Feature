@@ -16,12 +16,9 @@
 	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
-	
+	<link rel="stylesheet" href="css/main.min.css">
 
 
-
-
-	<script>loadCSS( "css/main.min.css?ver=1.0.0", false, "all" );</script>
 
 
 </head>
@@ -29,10 +26,19 @@
 <body>
 
 
-
+			<div class="wrap">
 				<canvas id="mainCanvas">
 					
 				</canvas>
+				</div>
+				<div id="logs">
+					<p>Самая нижняя точка по OY: <span id="logs_down_y" class="coords">0</span></p>
+					<p>Самая верхняя точка по OY: <span id="logs_up_y" class="coords">0</span></p>
+
+					<p>Самая левая точка по OX: <span id="logs_left_x" class="coords">0</span></p>
+					<p>Самая правая точка по OX: <span id="logs_right_x" class="coords">0</span></p>
+
+				</div>
 				<div id="config">
 					<p>
 						<label for="k">k: </label>		
@@ -51,14 +57,9 @@
 						<input type="number" id="output_y" value="0">
 			 		</p>
 				</div>
-				<div class="logs">
-					<p>Самая нижняя точка по OY: </p><span id="logs_down_y"></span>
-					<p>Самая верхняя точка по OY: </p><span id="logs_up_y"></span>
-
-					<p>Самая левая точка по OX: </p><span id="logs_left_x"></span>
-					<p>Самая правая точка по OX: </p><span id="logs_right_x"></span>
-
-				</div>
+				
+			
+				
 
 
 

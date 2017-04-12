@@ -53,17 +53,21 @@ Draw = (function() {
 
   Draw.prototype.setPar = function(k, x, y) {
     var i;
-    i = -30;
-    while (i < 30) {
-      ctx.fillStyle = this.color;
-      if (k > 0) {
-        ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) - Math.pow(i, 2), 0.5, 0.5);
-      } else {
-        ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) + Math.pow(i, 2), 0.5, 0.5);
+    if (k !== 0) {
+      i = -30;
+      while (i < 30) {
+        ctx.fillStyle = this.color;
+        if (k > 0) {
+          ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) - Math.pow(i, 2), 0.5, 0.5);
+        } else {
+          ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) + Math.pow(i, 2), 0.5, 0.5);
+        }
+        i += 0.01;
       }
-      i += 0.01;
+      return ctx.stroke();
+    } else {
+      return [k, x, y];
     }
-    return ctx.stroke();
   };
 
   Draw.prototype.setHyp = function(k, x, y) {
@@ -89,7 +93,7 @@ Draw = (function() {
 
 par = new Draw("blue");
 
-par.setPar(1, 0, 0);
+par.setPar(0, 0, 0);
 
 par1 = new Draw("red");
 

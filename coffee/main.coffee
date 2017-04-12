@@ -2,7 +2,7 @@ canvas = document.getElementById 'mainCanvas'
 
 canvas.width = 810
 canvas.height = 810
-ctx = canvas.getContext "2d"
+ctx = canvas.getContext "2d" 
 
 class BackGround
 	setGrid: ->
@@ -32,15 +32,18 @@ do bg.initBG
 class Draw
 	constructor: (@color) ->
 	setPar: (k, x, y)->
-		i = -30
-		while i < 30
-			ctx.fillStyle = @color
-			if k > 0 
-				ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) - Math.pow(i, 2), 0.5, 0.5)
-			else 
-				ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) + Math.pow(i, 2), 0.5, 0.5)
-			i += 0.01
-		do ctx.stroke
+		if k isnt 0
+			i = -30
+			while i < 30
+				ctx.fillStyle = @color
+				if k > 0 
+					ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) - Math.pow(i, 2), 0.5, 0.5)
+				else 
+					ctx.fillRect((x * 15 + canvas.width / 2) + i * k, (canvas.height / 2 + y * 15) + Math.pow(i, 2), 0.5, 0.5)
+				i += 0.01
+			do ctx.stroke
+		else
+			[k, x, y]
 	setHyp: (k, x, y)->
 		i = -20
 		do ctx.beginPath
@@ -61,7 +64,7 @@ class Draw
 #		i += 0.01
 #	do ctx.stroke
 par = new Draw("blue")
-par.setPar 1, 0, 0
+par.setPar 0, 0, 0
 par1 = new Draw("red")
 #par1.setHyp 1, 0, 0
 
