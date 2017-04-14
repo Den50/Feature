@@ -1,2 +1,2 @@
-## This is engine for 2d Graphicks
+## This is engine for 2d Graphics
 ____________________________________
