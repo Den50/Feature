@@ -1,12 +1,4 @@
-var BackGround, ConfigsPar, Draw, bg, canvas, configDOM, config_k, config_x, config_y, configsOut_k, configsOut_x, configsOut_y, configs_k, configs_x, configs_y, ctx, output_k, output_x, output_y, par, par1;
-
-canvas = document.getElementById('mainCanvas');
-
-canvas.width = 810;
-
-canvas.height = 810;
-
-ctx = canvas.getContext("2d");
+var BackGround, ConfigsPar, Draw, bg, par, par1;
 
 BackGround = (function() {
   function BackGround() {}
@@ -97,18 +89,6 @@ par.setPar(0, 0, 0);
 
 par1 = new Draw("red");
 
-config_k = document.getElementById('k');
-
-config_x = document.getElementById('x');
-
-config_y = document.getElementById('y');
-
-output_k = document.getElementById('output_k');
-
-output_x = document.getElementById('output_x');
-
-output_y = document.getElementById('output_y');
-
 ConfigsPar = (function() {
   function ConfigsPar(output, self, StatePut) {
     this.output = output;
@@ -125,6 +105,7 @@ ConfigsPar = (function() {
   };
 
   ConfigsPar.prototype.build = function(state, value) {
+    var i, l, len;
     if (this.StatePut === "in") {
       this.setChangeOutput();
     }
@@ -133,6 +114,15 @@ ConfigsPar = (function() {
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     bg.initBG();
+    if (typeof logs !== "undefined" && logs !== null) {
+      console.log(logs);
+    }
+    ctx.beginPath();
+    ctx.moveTo(logs[0][0], logs[0][1]);
+    for (l = 0, len = logs.length; l < len; l++) {
+      i = logs[l];
+      ctx.lineTo(i[0], i[1]);
+    }
     switch (state) {
       case 0:
         return par.setPar(value, config_x.value, config_y.value);
@@ -156,43 +146,3 @@ ConfigsPar = (function() {
   return ConfigsPar;
 
 })();
-
-configs_k = new ConfigsPar(output_k, config_k, "in");
-
-configs_k.self.onchange = function() {
-  return configs_k.init(0);
-};
-
-configs_x = new ConfigsPar(output_x, config_x, "in");
-
-configs_x.self.onchange = function() {
-  return configs_x.init(1);
-};
-
-configs_y = new ConfigsPar(output_y, config_y, "in");
-
-configs_y.self.onchange = function() {
-  return configs_y.init(2);
-};
-
-configsOut_k = new ConfigsPar(output_k, config_k, "out");
-
-configsOut_k.output.onchange = function() {
-  return configsOut_k.init(0);
-};
-
-configsOut_x = new ConfigsPar(output_x, config_x, "out");
-
-configsOut_x.output.onchange = function() {
-  return configsOut_x.init(1);
-};
-
-configsOut_y = new ConfigsPar(output_y, config_y, "out");
-
-configsOut_y.output.onchange = function() {
-  return configsOut_y.init(2);
-};
-
-configDOM = document.getElementById('config');
-
-configDOM.style.border = "2px solid " + par.getColorPar();

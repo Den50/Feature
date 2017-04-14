@@ -1,8 +1,3 @@
-canvas = document.getElementById 'mainCanvas'
-
-canvas.width = 810
-canvas.height = 810
-ctx = canvas.getContext "2d" 
 
 class BackGround
 	setGrid: ->
@@ -85,13 +80,6 @@ par1 = new Draw("red")
 #	ctx.lineTo i + 100, 100 / i + 10
 #do ctx.stroke
 
-#configs of DOM Elements (params $par)
-config_k = document.getElementById 'k'
-config_x = document.getElementById 'x'
-config_y = document.getElementById 'y'
-output_k = document.getElementById 'output_k'
-output_x = document.getElementById 'output_x'
-output_y = document.getElementById 'output_y'
 
 ##############
 class ConfigsPar
@@ -106,6 +94,11 @@ class ConfigsPar
 		do @setChangeInput if @StatePut == "out"
 		ctx.clearRect 0, 0, canvas.width, canvas.height # Clear
 		do bg.initBG #Background
+		console.log logs if logs?
+		do ctx.beginPath
+		ctx.moveTo logs[0][0], logs[0][1]
+		for i in logs
+			ctx.lineTo i[0], i[1]
 		switch state#Draw
 			when 0 then par.setPar value, config_x.value, config_y.value
 			when 1 then par.setPar config_k.value, value, config_y.value
@@ -116,36 +109,3 @@ class ConfigsPar
 			@build(state, @output.value)
 		else
 			@build(state, @self.value)
-
-#Inputs
-configs_k = new ConfigsPar(output_k, config_k, "in")
-configs_k.self.onchange = ->
-	configs_k.init 0
-configs_x = new ConfigsPar(output_x, config_x, "in")
-configs_x.self.onchange = ->
-	configs_x.init 1
-configs_y = new ConfigsPar(output_y, config_y, "in")
-configs_y.self.onchange = ->
-	configs_y.init 2
-##
-#Outputs
-#K
-configsOut_k = new ConfigsPar(output_k, config_k, "out")
-configsOut_k.output.onchange = ->
-	configsOut_k.init 0
-
-#OX
-configsOut_x = new ConfigsPar(output_x, config_x, "out")
-configsOut_x.output.onchange = ->
-	configsOut_x.init 1
-
-#OY
-configsOut_y = new ConfigsPar(output_y, config_y, "out")
-configsOut_y.output.onchange = ->
-	configsOut_y.init 2
-##
-
-configDOM = document.getElementById 'config'
-
-configDOM.style.border = "2px solid " + do par.getColorPar
-

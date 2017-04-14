@@ -32,12 +32,19 @@
 				</canvas>
 				</div>
 				<div id="logs">
-					<p>Самая нижняя точка по OY: <span id="logs_down_y" class="coords">0</span></p>
+					<div class="points">
+						<p>Самая нижняя точка по OY: <span id="logs_down_y" class="coords">0</span></p>
 					<p>Самая верхняя точка по OY: <span id="logs_up_y" class="coords">0</span></p>
 
 					<p>Самая левая точка по OX: <span id="logs_left_x" class="coords">0</span></p>
 					<p>Самая правая точка по OX: <span id="logs_right_x" class="coords">0</span></p>
-
+					</div>
+					
+					<div class="data-app">
+						<label for="summ_x_sqrt">summ_x_sqrt: <span id="summ_x_sqrt" class="coords">0</span></label><br>
+						<label for="summ_x_umn_y">summ_x_umn_y: <span id="summ_x_umn_y" class="coords">0</span></label>
+						<label for="count_coords">count_coords: <span id="count_coords" class="coords">0</span></label>
+					</div>
 				</div>
 				<div id="config">
 					<p>
@@ -56,6 +63,10 @@
 						<input name="y" id="y" type="range" min="-30" max="30" step="1" value="0">
 						<input type="number" id="output_y" value="0">
 			 		</p>
+			 		<div class="clear">
+			 			<button id="clear_canvas">Очистить canvas</button>
+			 			<button id="clear_coords">Очистить координаты canvas</button>
+			 		</div>	
 				</div>
 				
 			
@@ -75,9 +86,11 @@
 	<!-- Load Scripts Start -->
 	<script>var scr = {"scripts":[
 		{"src" : "js/libs.js", "async" : false},
-		{"src" : "js/main.js", "async" : false},
+		{"src" : "js/varaibles.js", "async" : false},
 		{"src" : "js/Draw.js", "async" : false},
-		{"src" : "js/Approximation.js", "async" : false}
+		{"src" : "js/Approximation.js", "async" : false},
+		{"src" : "js/main.js", "async" : false},
+		{"src" : "js/DOMels.js", "async" : false}
 		]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
 	</script>
 	<!-- Load Scripts End -->

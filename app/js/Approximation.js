@@ -11,12 +11,17 @@ Approximation = (function() {
   Approximation.prototype.Y = [];
 
   Approximation.prototype.data = {
-    x_sqrt: [],
-    x_umn_y: []
+    func: "linear",
+    summ_x_sqrt_arr: [],
+    summ_x_umn_y_arr: [],
+    summ_x_umn_y: 0,
+    summ_x_sqrt: 0,
+    count_coords: 0,
+    matrix: []
   };
 
   Approximation.prototype.init = function() {
-    var i, j, k, l, len, len1, len2, m, n, o, ref, ref1, ref2, results;
+    var i, j, k, l, len, len1, len2, len3, len4, len5, m, n, o, p, q, r, ref, ref1, ref2, ref3, ref4, ref5, results, s, u;
     ref = this.coords;
     for (m = 0, len = ref.length; m < len; m++) {
       i = ref[m];
@@ -26,30 +31,41 @@ Approximation = (function() {
     ref1 = this.X;
     for (n = 0, len1 = ref1.length; n < len1; n++) {
       j = ref1[n];
-      this.data.x_sqrt.push(Math.pow((j - canvas.width / 2) / 15, 2));
+      this.data.summ_x_sqrt_arr.push(Math.pow((j - canvas.width / 2) / 15, 2));
     }
     ref2 = this.X;
-    results = [];
     for (o = 0, len2 = ref2.length; o < len2; o++) {
       l = ref2[o];
-      results.push((function() {
-        var len3, p, ref3, results1;
-        ref3 = this.Y;
-        results1 = [];
-        for (p = 0, len3 = ref3.length; p < len3; p++) {
-          k = ref3[p];
-          this.data.x_umn_y.push(((l - canvas.width / 2) / 15) * ((k - canvas.width / 2) / 15));
-          break;
-        }
-        return results1;
-      }).call(this));
+      ref3 = this.Y;
+      for (q = 0, len3 = ref3.length; q < len3; q++) {
+        k = ref3[q];
+        this.data.summ_x_umn_y_arr.push(((l - canvas.width / 2) / 15) * ((k - canvas.width / 2) / 15));
+        break;
+      }
+    }
+    ref4 = this.data.summ_x_umn_y_arr;
+    for (r = 0, len4 = ref4.length; r < len4; r++) {
+      p = ref4[r];
+      this.data.summ_x_umn_y += p;
+    }
+    ref5 = this.data.summ_x_sqrt_arr;
+    results = [];
+    for (s = 0, len5 = ref5.length; s < len5; s++) {
+      u = ref5[s];
+      results.push(this.data.summ_x_sqrt += u);
     }
     return results;
   };
 
   Approximation.prototype.getData = function() {
     this.init();
-    return [this.X, this.Y, this.data.x_sqrt, this.data.x_umn_y];
+    return {
+      x: this.X,
+      y: this.Y,
+      summ_x_sqrt: this.data.summ_x_sqrt,
+      summ_x_umn_y: this.data.summ_x_umn_y,
+      count_coords: this.coords.length
+    };
   };
 
   return Approximation;
@@ -58,6 +74,4 @@ Approximation = (function() {
 
 app = new Approximation("linear", logs);
 
-canvas.addEventListener("mouseup", function() {
-  return console.log(app.getData());
-});
+canvas.addEventListener("mouseup", function() {});

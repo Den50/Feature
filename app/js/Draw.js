@@ -1,4 +1,4 @@
-var Coords, Dis, Eng, Engp, Point, coords, coords_down_y, coords_left_x, coords_right_x, coords_up_y, logs, radius;
+var Coords, Dis, Eng, Engp, Point, coords, logs, radius;
 
 Engp = false;
 
@@ -9,14 +9,6 @@ radius = 1;
 ctx.lineWidth = radius * 2;
 
 logs = [];
-
-coords_down_y = document.getElementById('logs_down_y');
-
-coords_up_y = document.getElementById('logs_up_y');
-
-coords_left_x = document.getElementById('logs_left_x');
-
-coords_right_x = document.getElementById('logs_right_x');
 
 Array.prototype.min = function() {
   return Math.min.apply(Math, this);
@@ -46,10 +38,10 @@ Coords = (function() {
       y.push(i[1]);
       x.push(i[0]);
     }
-    this.down_y = ((Math.max.apply(Math, y)) - canvas.height / 2) / 15;
-    this.up_y = ((Math.min.apply(Math, y)) - canvas.height / 2) / 15;
-    this.right_x = ((Math.max.apply(Math, x)) - canvas.width / 2) / 15;
-    return this.left_x = ((Math.min.apply(Math, x)) - canvas.width / 2) / 15;
+    this.down_y = Math.round(((Math.max.apply(Math, y)) - canvas.height / 2) / 15);
+    this.up_y = Math.round(((Math.min.apply(Math, y)) - canvas.height / 2) / 15);
+    this.right_x = Math.round(((Math.max.apply(Math, x)) - canvas.width / 2) / 15);
+    return this.left_x = Math.round(((Math.min.apply(Math, x)) - canvas.width / 2) / 15);
   };
 
   Coords.prototype.getCoords = function() {
@@ -90,7 +82,6 @@ coords = new Coords;
 Dis = function(e) {
   Engp = false;
   coords.getCoordsXY(logs);
-  console.log(coords.getCoords());
   return coords.setCoords();
 };
 
