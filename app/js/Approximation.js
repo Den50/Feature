@@ -14,6 +14,8 @@ Approximation = (function() {
     func: "linear",
     summ_x_sqrt_arr: [],
     summ_x_umn_y_arr: [],
+    summ_x: 0,
+    summ_y: 0,
     summ_x_umn_y: 0,
     summ_x_sqrt: 0,
     count_coords: 0,
@@ -31,6 +33,7 @@ Approximation = (function() {
     ref1 = this.X;
     for (n = 0, len1 = ref1.length; n < len1; n++) {
       j = ref1[n];
+      this.data.summ_x += j;
       this.data.summ_x_sqrt_arr.push(Math.pow((j - canvas.width / 2) / 15, 2));
     }
     ref2 = this.X;
@@ -39,6 +42,7 @@ Approximation = (function() {
       ref3 = this.Y;
       for (q = 0, len3 = ref3.length; q < len3; q++) {
         k = ref3[q];
+        this.data.summ_y += k;
         this.data.summ_x_umn_y_arr.push(((l - canvas.width / 2) / 15) * ((k - canvas.width / 2) / 15));
         break;
       }
@@ -64,7 +68,8 @@ Approximation = (function() {
       y: this.Y,
       summ_x_sqrt: this.data.summ_x_sqrt,
       summ_x_umn_y: this.data.summ_x_umn_y,
-      count_coords: this.coords.length
+      count_coords: this.coords.length,
+      matrix: [[this.data.summ_x_sqrt, this.data.summ_x], [this.data.summ_x, this.coords.length]]
     };
   };
 
@@ -74,4 +79,7 @@ Approximation = (function() {
 
 app = new Approximation("linear", logs);
 
-canvas.addEventListener("mouseup", function() {});
+canvas.addEventListener("mouseup", function() {
+  console.log((app.getData()).matrix);
+  return console.log(InverseMatrix((app.getData()).matrix));
+});

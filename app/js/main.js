@@ -20,7 +20,7 @@ BackGround = (function() {
   };
 
   BackGround.prototype.setWay = function() {
-    ctx.fillStyle = "#777";
+    ctx.fillStyle = "#000";
     ctx.fillRect(canvas.width / 2, 0, 2, canvas.height);
     return ctx.fillRect(0, canvas.height / 2, canvas.width, 2);
   };
